@@ -1,0 +1,139 @@
+openapi: 3.0.3
+info:
+  title: Calculator API
+  description: |-
+    A stateless REST API to perform basic arithmetic calculations.
+  contact:
+    email: villaleobos@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /add:
+    post:
+      summary: Add two numbers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successfully added two numbers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+  /subtract:
+    post:
+      summary: Subtract two numbers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successfully subtracted two numbers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+  /multiply:
+    post:
+      summary: Multiply two numbers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successfully multiplied two numbers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+  /divide:
+    post:
+      summary: Divide two numbers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+        required: true
+      responses:
+        "200":
+          description: Successfully divided two numbers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+        "406":
+          description: Division by zero
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /sum:
+    post:
+      summary: Add all numbers in an array
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SumRequest"
+        required: true
+      responses:
+        "200":
+          description: Successfully divided two numbers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Unacceptable Request
+        error:
+          type: string
+          example: division by zero
+    CalculationRequest:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float64
+          example: 10.34
+        y:
+          type: number
+          format: float64
+          example: 45
+    CalculationResponse:
+      type: object
+      properties:
+        interpretation:
+          type: string
+          example: 5 + 2.3
+        result:
+          type: number
+          format: float64
+          example: 7.3
+    SumRequest:
+      type: object
+      properties:
+        numbers:
+          type: array
+          items:
+            type: number
+            format: float64
+          example: [1, 5.3, 9]
