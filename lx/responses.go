@@ -29,17 +29,17 @@ func WriteJsonWithStatus(w http.ResponseWriter, statusCode int, val any) {
 	_, _ = w.Write(data)
 }
 
-// WriteErrorWithStatus writes an error to w with a message and status code.
-func WriteErrorWithStatus(w http.ResponseWriter, statusCode int, message string) {
+// WriteError writes an error to w with a message and status code.
+func WriteError(w http.ResponseWriter, statusCode int, message string) {
 	WriteJsonWithStatus(w, statusCode, ErrorResponse{
 		Status: strings.ToLower(http.StatusText(statusCode)),
 		Error:  strings.ToLower(strings.TrimSpace(message)),
 	})
 }
 
-// WriteError writes an internal server error to w with a message.
-func WriteError(w http.ResponseWriter, message string) {
-	WriteErrorWithStatus(w, http.StatusInternalServerError, message)
+// WriteInternalServerError writes an internal server error to w with a message.
+func WriteInternalServerError(w http.ResponseWriter) {
+	WriteError(w, http.StatusInternalServerError, "an internal server error occurred")
 }
 
 // WriteJson writes val to w (encoded using json.Marshal) and sets the status

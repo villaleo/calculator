@@ -25,7 +25,7 @@ func (s *ServerAdapter) handleCalculation(w http.ResponseWriter, r *http.Request
 
 	if err := s.MatchesMethod(r, http.MethodPost); err != nil {
 		logger.Error("method not allowed", "method", r.Method, "url", r.URL, "error", err.Error())
-		lx.WriteErrorWithStatus(w, http.StatusMethodNotAllowed, err.Error())
+		lx.WriteError(w, http.StatusMethodNotAllowed, err.Error())
 		return
 	}
 
@@ -34,7 +34,7 @@ func (s *ServerAdapter) handleCalculation(w http.ResponseWriter, r *http.Request
 	var calcReq CalculationRequest
 	if err := s.DecodeRequestBody(r, &calcReq); err != nil {
 		logger.Error("received bad request", "method", r.Method, "url", r.URL, "error", err.Error())
-		lx.WriteErrorWithStatus(w, http.StatusBadRequest, err.Error())
+		lx.WriteError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -63,13 +63,13 @@ func (s *ServerAdapter) handleCalculation(w http.ResponseWriter, r *http.Request
 		}
 	default:
 		logger.Warn("unknown operation", "method", r.Method, "url", r.URL, "operation", operation)
-		lx.WriteErrorWithStatus(w, http.StatusNotFound, "unknown operation")
+		lx.WriteError(w, http.StatusNotFound, "unknown operation")
 		return
 	}
 
 	if err != nil {
 		logger.Error("received unacceptable request", "method", r.Method, "url", r.URL, "error", err)
-		lx.WriteErrorWithStatus(w, http.StatusNotAcceptable, err.Error())
+		lx.WriteError(w, http.StatusNotAcceptable, err.Error())
 		return
 	}
 
@@ -81,7 +81,7 @@ func (s *ServerAdapter) handleSum(w http.ResponseWriter, r *http.Request) {
 
 	if err := s.MatchesMethod(r, http.MethodPost); err != nil {
 		logger.Error("method not allowed", "method", r.Method, "url", r.URL, "error", err.Error())
-		lx.WriteErrorWithStatus(w, http.StatusMethodNotAllowed, err.Error())
+		lx.WriteError(w, http.StatusMethodNotAllowed, err.Error())
 		return
 	}
 
@@ -90,7 +90,7 @@ func (s *ServerAdapter) handleSum(w http.ResponseWriter, r *http.Request) {
 	var sumReq SumRequest
 	if err := s.DecodeRequestBody(r, &sumReq); err != nil {
 		logger.Error("received bad request", "method", r.Method, "url", r.URL, "error", err.Error())
-		lx.WriteErrorWithStatus(w, http.StatusBadRequest, err.Error())
+		lx.WriteError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
