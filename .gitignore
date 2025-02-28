@@ -1,2 +1,5 @@
 # Annoying macOS files
 .DS_Store
+
+build/
+assets/

@@ -1,19 +1,23 @@
 package main
 
 import (
-	"github.com/villaleo/calculator/lx"
+	"net/http"
 )
 
 func main() {
-	server := NewServerAdapter(lx.WithAddr("localhost:3000"))
-	server.UseMiddleware(server.RequestIdMiddleware)
+	mux := http.NewServeMux()
 
-	// Register arithmetic handlers
+	srv := NewServerAdapter(
+		WithHandler(mux),
+		WithAddr("localhost:3000"),
+	)
+
+	// Register calculation endpoints
 	operations := []string{"add", "subtract", "multiply", "divide"}
 	for _, operation := range operations {
-		server.HandleFunc("POST /"+operation, server.handleCalculation)
+		mux.HandleFunc("POST /"+operation, srv.handleCalculation)
 	}
 
-	server.HandleFunc("POST /sum", server.handleSum)
-	server.ListenAndServe()
+	mux.HandleFunc("POST /sum", srv.handleSum)
+	srv.ListenAndServe()
 }
