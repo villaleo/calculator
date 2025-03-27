@@ -21,7 +21,8 @@ type Opts struct {
 	logger  slog.Handler
 }
 
-func defaultServerAdapterOpts() Opts {
+// Default returns the default ServerAdapter configuration.
+func Default() Opts {
 	return Opts{
 		addr:    ":8080",
 		handler: http.NewServeMux(),
@@ -71,7 +72,7 @@ type ServerAdapter struct {
 
 // NewServerAdapter creates a new ServerAdapter.
 func NewServerAdapter(opts ...OptsFunc) *ServerAdapter {
-	options := defaultServerAdapterOpts()
+	options := Default()
 
 	for _, optionFunc := range opts {
 		optionFunc(&options)
