@@ -19,7 +19,8 @@ A lightweight, stateless REST API to perform basic arithmetic operations.
 - [ ] Create a frontend that makes use of the API.
 
 ## 📡 Base URL
-http://localhost:8080
+
+<http://localhost:8080>
 
 ## 📖 API Endpoints
 
