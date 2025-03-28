@@ -13,10 +13,10 @@ type ErrorResponse struct {
 	Error  string `json:"error"`
 }
 
-// WriteJsonWithStatus writes val to w (encoded using json.Marshal) and sets
+// WriteJSONWithStatus writes val to w (encoded using json.Marshal) and sets
 // the status code. If json.Marshal fails for val, an internal server error
 // is written instead.
-func WriteJsonWithStatus(w http.ResponseWriter, statusCode int, val any) {
+func WriteJSONWithStatus(w http.ResponseWriter, statusCode int, val any) {
 	w.Header().Set("Content-Type", "application/json")
 
 	data, err := json.Marshal(val)
@@ -31,15 +31,15 @@ func WriteJsonWithStatus(w http.ResponseWriter, statusCode int, val any) {
 
 // WriteError writes an error to w with a message and status code.
 func WriteError(w http.ResponseWriter, statusCode int, message string) {
-	WriteJsonWithStatus(w, statusCode, ErrorResponse{
+	WriteJSONWithStatus(w, statusCode, ErrorResponse{
 		Status: strings.ToLower(http.StatusText(statusCode)),
 		Error:  strings.ToLower(strings.TrimSpace(message)),
 	})
 }
 
-// WriteJson writes val to w (encoded using json.Marshal) and sets the status
+// WriteJSON writes val to w (encoded using json.Marshal) and sets the status
 // code to http.StatusOk (200). If json.Marshal fails for val, an internal
 // server error is written instead.
-func WriteJson(w http.ResponseWriter, val any) {
-	WriteJsonWithStatus(w, http.StatusOK, val)
+func WriteJSON(w http.ResponseWriter, val any) {
+	WriteJSONWithStatus(w, http.StatusOK, val)
 }

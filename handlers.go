@@ -57,7 +57,7 @@ func (s *ServerAdapter) handleCalculation(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	WriteJson(w, resp)
+	WriteJSON(w, resp)
 }
 
 func (s *ServerAdapter) handleSum(w http.ResponseWriter, r *http.Request) {
@@ -81,7 +81,7 @@ func (s *ServerAdapter) handleSum(w http.ResponseWriter, r *http.Request) {
 		total += num
 	}
 
-	WriteJson(w, CalculationResponse{
+	WriteJSON(w, CalculationResponse{
 		Interpretation: sumReq.Interpret(),
 		Result:         total,
 	})
