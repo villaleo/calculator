@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"mime"
 	"net/http"
 )
@@ -30,8 +32,13 @@ func EnforceJSONHandler(next http.Handler) http.Handler {
 
 // LogRequestHandler logs the request to this ServerAdapter's logger.
 func (s *ServerAdapter) LogRequestHandler(next http.Handler) http.Handler {
+	// Generate a random, cryptographically secure request ID
+	var generatedBytes [8]byte
+	_, _ = rand.Read(generatedBytes[:])
+	id := base64.RawStdEncoding.EncodeToString(generatedBytes[:])
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		s.Logger.Info("request received", "method", r.Method, "path", r.URL.Path)
+		s.Logger.Info("request received", "method", r.Method, "path", r.URL.Path, "id", id)
 		next.ServeHTTP(w, r)
 	})
 }
