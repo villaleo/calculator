@@ -45,14 +45,6 @@ func WithHandler(handler http.Handler) OptsFunc {
 	}
 }
 
-// WithWriter sets the ServerAdapter's writer.
-func WithWriter(w io.Writer) OptsFunc {
-	return func(opt *Opts) {
-		opt.writer = w
-		opt.logger = slog.NewJSONHandler(w, nil)
-	}
-}
-
 // WithLogger sets the ServerAdapter's logger.
 func WithLogger(logger slog.Handler) OptsFunc {
 	return func(opt *Opts) {
